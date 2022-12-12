@@ -1,3 +1,5 @@
+
+
 if game.PlaceId == 2753915549 then
         W = true
     elseif game.PlaceId == 4442272183 then
@@ -56,6 +58,11 @@ print("Activated Keybind")
 venyx:toggle()
 end, function()
 print("Changed Keybind")
+end)
+
+section2:addButton("close ui",function()
+venyx:toggle()
+end, function()
 end)
 
 local page = venyx:addPage("island", 11804025238)
@@ -1287,5 +1294,4 @@ end
             end)
         end
     end)
-
 
