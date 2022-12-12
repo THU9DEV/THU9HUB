@@ -21,12 +21,14 @@ section1:addToggle("AutoFarm Level", _G.AutoFarm, function(value)
         _G.Seet = value
          _G.M = value
             _G.BringMonster = value
+	     _G.FastAttack = value
          StopTween(_G.AutoFarm)
 end)
 
 section1:addToggle("Fast Attack(Mobile)", _G.AutoFarm, function(value)
-       _G.FastAttack = value
+     _G.FastAttack = value
 end)
+
 
 WeaponList = {}
 	        for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do  
@@ -67,6 +69,9 @@ end)
 
 local page = venyx:addPage("island", 11804025238)
 local section1 = page:addSection("teleport")
+
+local page = venyx:addPage("setting", 7059346386)
+local section1 = page:addSection("setting")
 
     function CheckQuest() 
         Level = game:GetService("Players").LocalPlayer.Data.Level.Value
@@ -1295,3 +1300,15 @@ end
         end
     end)
 
+local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+local Camera = require(game.ReplicatedStorage.Util.CameraShaker)
+Camera:Stop()
+	coroutine.wrap(function()
+    game:GetService("RunService").Stepped:Connect(function()
+        if getupvalues(CombatFramework)[2]['activeController'].timeToNextAttack then
+            getupvalues(CombatFramework)[2]['activeController'].timeToNextAttack = 0
+            getupvalues(CombatFramework)[2]['activeController'].hitboxMagnitude = 25
+            getupvalues(CombatFramework)[2]['activeController']:attack()
+        end
+    end)
+end)()
