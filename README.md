@@ -21,7 +21,6 @@ section1:addToggle("AutoFarm Level", _G.AutoFarm, function(value)
         _G.Seet = value
          _G.M = value
             _G.BringMonster = value
-	     _G.FastAttack = value
          StopTween(_G.AutoFarm)
 end)
 
