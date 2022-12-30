@@ -11,7 +11,7 @@ if game.PlaceId == 2753915549 then
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zxciaz/VenyxUI/main/Reuploaded"))() --someone reuploaded it so I put it in place of the original back up so guy can get free credit.
 local venyx = library.new("THU9 HUB", 5013109572)
 
-local page = venyx:addPage("main", 5012544693)
+local page = venyx:addPage("main", 11446825283)
 local section1 = page:addSection("farm")
 
 
@@ -24,9 +24,49 @@ section1:addToggle("AutoFarm Level", _G.AutoFarm, function(value)
          StopTween(_G.AutoFarm)
 end)
 
-section1:addToggle("Fast Attack(Mobile)", _G.AutoFarm, function(value)
-     _G.FastAttack = value
+section1:addToggle("Fast Attack", _G.AutoFarm, function(value)
+     _G.UpperCutFastAttack = value
 end)
+
+
+
+local x2Code = {
+        "GAMERROBOT_YT",
+        "SUBGAMERROBOT_RESET",
+        "ADMINGIVEAWAY",
+        "GAMER_ROBOT_1M",
+        "3BVISITS",
+        "UPD16",
+        "FUDD10",
+        "BIGNEWS",
+        "THEGREATACE",
+        "SUB2GAMERROBOT_EXP1",
+        "StrawHatMaine",
+        "Sub2OfficialNoobie",
+        "SUB2NOOBMASTER123",
+        "Sub2Daigrock",
+        "Axiore",
+        "TantaiGaming",
+        "STRAWHATMAINE",
+        "Enyu_is_Pro",
+        "Magicbus",
+        "Sub2Fer999",
+        "Starcodeheo",
+        "JCWK",
+        "KittGaming",
+        "Bluxxy",
+        "TheGreatAce"
+    }
+function RedeemCode(value)
+       game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(value)
+end
+    
+section1:addButton("Redeem All Code",function(a)
+     for i,v in pairs(x2Code) do
+        RedeemCode(v)
+    end
+end)
+
 
 
 WeaponList = {}
@@ -1300,29 +1340,80 @@ end
     end)
 
 
+_G.UpperCutFastAttack = true
+
+local Module = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+local CombatFramework = debug.getupvalues(Module)[2]
+local CameraShakerR = require(game.ReplicatedStorage.Util.CameraShaker)
 spawn(function()
-   game:GetService("RunService").RenderStepped:Connect(function()
-    pcall(function()
-        if _G.FastAttack then
-            local Combat = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
-            local Cemara = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.CameraShaker)
-            Cemara.CameraShakeInstance.CameraShakeState = {FadingIn = 3, FadingOut = 2, Sustained = 0, Inactive = 1}
-            Combat.activeController.timeToNextAttack = 0
-            Combat.activeController.hitboxMagnitude = 120
-            Combat.activeController.increment = 3
-        end
-    end)
-end) 
+while true do
+	if _G.UpperCutFastAttack then
+		pcall(function()
+			CameraShakerR:Stop()
+			CombatFramework.activeController.attacking = false
+			CombatFramework.activeController.timeToNextAttack = 0 --0
+			CombatFramework.activeController.increment = 0  --3
+			CombatFramework.activeController.hitboxMagnitude = 150
+			CombatFramework.activeController.blocking = false
+			CombatFramework.activeController.timeToNextBlock = 0 --0
+			CombatFramework.activeController.focusStart = 0
+			CombatFramework.activeController.humanoid.AutoRotate = true
+		end)
+	end
+	task.wait()
+end
 end)
- 
- 
+
 spawn(function()
-   game:GetService("RunService").RenderStepped:Connect(function()
-    pcall(function()
-        if _G.FastAttack then
-            game:GetService'VirtualUser':CaptureController()
-            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-        end
-    end)
+  while wait() do
+  if _G.UpperCutFastAttack then
+	for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
+		if v.Name == "CurvedRing" or v.Name == "SlashHit" or v.Name == "DamageCounter" or v.Name == "SwordSlash" or v.Name == "SlashTail" or v.Name == "Sounds" then
+			v:Destroy() 
+		end
+	end
+end
+end
 end) 
+getgenv().A = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).wrapAttackAnimationAsync
+getgenv().B = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle).play
+spawn(function()
+while wait() do
+  if _G.UpperCutFastAttack then
+		pcall(function()
+			require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).wrapAttackAnimationAsync =function(a1,a2,a3,a4,a5)
+				local GetBladeHits = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).getBladeHits(a2,a3,a4)
+				if GetBladeHits then
+					 require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).play = function() end
+					a1:Play(0.2, 0.2, 0.2)
+					a5(GetBladeHits)
+					 require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).play = getgenv().B 
+					wait(.5)
+					a1:Stop()
+				end
+			end
+		end)
+	 end
+end
 end)
+
+
+
+task.spawn(function()
+    while wait() do
+        for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"]:GetChildren()) do
+            pcall(function()
+                if v.Name == ("CurvedRing") or v.Name == ("SlashHit") or v.Name == ("SwordSlash") or v.Name == ("SlashTail") or v.Name == ("Sounds") then
+                    v:Destroy()
+                end
+            end)
+        end
+    end
+end)
+
+if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Death") then
+    game:GetService("ReplicatedStorage").Effect.Container.Death:Destroy()
+end
+if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Respawn") then
+    game:GetService("ReplicatedStorage").Effect.Container.Respawn:Destroy()
+end
